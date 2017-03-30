@@ -12,12 +12,15 @@ ToBuyController.$inject = ['ShoppingListCheckOffService'];
 function ToBuyController(ShoppingListCheckOffService) {
   var buyController = this;
 
+  //get "buy" items
   buyController.itemsToBuy = ShoppingListCheckOffService.itemsToBuy();
 
+  //buy an item
   buyController.buy = function(index){
     ShoppingListCheckOffService.buy(index);
   }
 
+  //check if "buy" is empty
   buyController.buyEmpty = function(){
     return ShoppingListCheckOffService.buyEmpty();  
   } 
@@ -30,14 +33,15 @@ AlreadyBoughtController.$inject = ['ShoppingListCheckOffService'];
 function AlreadyBoughtController(ShoppingListCheckOffService) {
   var boughtController = this;
 
+  // get "bought" items
   boughtController.itemsBought = ShoppingListCheckOffService.itemsBought();
 
+  //check if "bought" is empty
   boughtController.boughtEmpty = function (){
     return ShoppingListCheckOffService.boughtEmpty();
   }
 }
 //-----------------------------------------------------------------
-
 
 //Service: ShoppingListCheckOffService
 //-----------------------------------------------------------------
@@ -53,20 +57,20 @@ function ShoppingListCheckOffService() {
         {name: "Cookies", quantity:"1"}
         ];
        
-  // List of bought items      
+  // List of "bought" items      
   var bought = [];
 
-  //itemsToBuy function
+  //itemsToBuy function: returns "buy" items
   service.itemsToBuy = function () {
     return buy;
   };
 
-  //itemsBought function
+  //itemsBought function: returns "bought" items
    service.itemsBought = function () {
     return bought;
   };
 
-  //Buy function
+  //Buy function: removes item from "buy" array and adds it to "bought" array
   service.buy = function(itemIdex){    
     //Add item to bought array  
     var value = buy[itemIdex]
@@ -76,7 +80,7 @@ function ShoppingListCheckOffService() {
     buy.splice(itemIdex,1);
   }
 
-  //Check if buy is empty
+  //Check if "buy" is empty
   service.buyEmpty = function(){
     if (buy.length == 0)
     {
@@ -87,7 +91,7 @@ function ShoppingListCheckOffService() {
     }
   }
 
-  //Check if buy is empty
+  //Check if "bought" is empty
   service.boughtEmpty = function(){
     if (bought.length == 0)
     {
@@ -97,7 +101,6 @@ function ShoppingListCheckOffService() {
       return false;
     }
   }
-
 
 }
 //-----------------------------------------------------------------
